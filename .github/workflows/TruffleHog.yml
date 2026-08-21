@@ -22,5 +22,5 @@ jobs:
 
       - name: TruffleHog
         uses: trufflesecurity/trufflehog@main
-        with:
-          extra_args: --results=verified,unknown
+        #with:
+        #  extra_args: --results=verified,unknown
