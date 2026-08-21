@@ -1,0 +1,8 @@
+[extend]
+useDefault = true
+
+[[rules]]
+id = "ghscd-demo-token"
+description = "Token didatico do GHSCD"
+regex = '''GHSCD_[A-Z0-9]{32}'''
+keywords = ["GHSCD_"]
