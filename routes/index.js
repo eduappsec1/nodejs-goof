@@ -188,15 +188,26 @@ exports.create = function (req, res, next) {
 };
 
 exports.destroy = function (req, res, next) {
-  Todo.findById(req.params.id, function (err, todo) {
+  const id = req.params.id;
 
-    try {
-      todo.remove(function (err, todo) {
-        if (err) return next(err);
-        res.redirect('/');
-      });
-    } catch (e) {
+  // Valida que o id é um ObjectId válido antes de usá-lo
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    // id inválido -> 400 Bad Request
+    return res.status(400).send('Invalid id');
+  }
+
+  // Use findByIdAndDelete / findOneAndDelete para operação atômica e clara
+  Todo.findByIdAndDelete(id, function (err, todo) {
+    if (err) {
+      // logue o erro e propague para o handler de erro do Express
+      console.error('Error deleting todo:', err);
+      return next(err);
     }
+    if (!todo) {
+      // item não encontrado
+      return res.status(404).send('Not found');
+    }
+    return res.redirect('/');
   });
 };
 
