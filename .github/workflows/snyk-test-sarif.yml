@@ -1,5 +1,8 @@
 name: "snyk test"
 on: [push, pull_request]
+permissions:
+  contents: read
+  security-events: write
 jobs:
   build:
     runs-on: ubuntu-latest
